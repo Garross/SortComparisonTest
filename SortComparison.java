@@ -14,23 +14,23 @@ class SortComparison {
 
 	public static void main(String[] args) {
 		
-//		SortComparisonTest.testInsertionSort();
-//		SortComparisonTest.testQuickSort();
-//		SortComparisonTest.testSelectionSort();
-//		SortComparisonTest.testMergeSortIterative();
-//		SortComparisonTest.testMergeSortRecursice();
+		SortComparisonTest.testInsertionSort();
+		SortComparisonTest.testQuickSort();
+		SortComparisonTest.testSelectionSort();
+		SortComparisonTest.testMergeSortIterative();
+		SortComparisonTest.testMergeSortRecursice();
 
-		double[] a = {2,1};
-
-		System.out.println("Before Sort");
-		for (int i = 0; i < a.length; i++) {
-			System.out.println(a[i]);
-		}
-		System.out.println("After Sort");
-		a = mergeSortRecursive(a);
-		for (int i = 0; i < a.length; i++) {
-			System.out.println(a[i]);
-		}
+//		double[] a = {6,5,7,800, -1000, 5,1,1,10,102};
+//
+//		System.out.println("Before Sort");
+//		for (int i = 0; i < a.length; i++) {
+//			System.out.println(a[i]);
+//		}
+//		System.out.println("After Sort");
+//		a = selectionSort(a);
+//		for (int i = 0; i < a.length; i++) {
+//			System.out.println(a[i]);
+//		}
 	}
 
 	/**
@@ -43,7 +43,8 @@ class SortComparison {
 	 *
 	 */
 		public static double[] insertionSort(double a[]) {
-
+		
+		if(a == null) return null;
 		for (int j = 1; j < a.length; j++) {
 			double key = a[j];
 			int i = j - 1;
@@ -198,9 +199,8 @@ class SortComparison {
 	 */
 	
 	public static double[] mergeSortRecursive(double a[]) {
-
-		if (a.length == 1 )
-			return a;
+		if(a == null) return null;
+		if (a.length <=1) return a;
 
 		double x = a.length / 2;
 		int mid = (int) Math.floor(x);
@@ -262,6 +262,8 @@ class SortComparison {
 	 *
 	 */
 	public static double[] selectionSort(double a[]) {
+		
+		if(a == null) return null;
 
 		for (int i = 0; i < a.length - 1; i++) {
 			int index = i;
