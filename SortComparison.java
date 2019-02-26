@@ -13,15 +13,21 @@ import java.util.*;
 class SortComparison {
 
 	public static void main(String[] args) {
+		
+//		SortComparisonTest.testInsertionSort();
+//		SortComparisonTest.testQuickSort();
+//		SortComparisonTest.testSelectionSort();
+//		SortComparisonTest.testMergeSortIterative();
+//		SortComparisonTest.testMergeSortRecursice();
 
-		double[] a = { 3, 2, 5, 1, 4, 12, 30, 15, 20, 1, 1, 1, 500.2, -1000 };
+		double[] a = {2,1};
 
 		System.out.println("Before Sort");
 		for (int i = 0; i < a.length; i++) {
 			System.out.println(a[i]);
 		}
 		System.out.println("After Sort");
-		a = selectionSort(a);
+		a = mergeSortRecursive(a);
 		for (int i = 0; i < a.length; i++) {
 			System.out.println(a[i]);
 		}
@@ -36,7 +42,7 @@ class SortComparison {
 	 * @return array sorted in ascending order.
 	 *
 	 */
-	static double[] insertionSort(double a[]) {
+		public static double[] insertionSort(double a[]) {
 
 		for (int j = 1; j < a.length; j++) {
 			double key = a[j];
@@ -63,8 +69,10 @@ class SortComparison {
 	 * @return array sorted in ascending order
 	 *
 	 */
-	static double[] quickSort(double a[], int begin, int end) {
-
+		//Always make sure that the end parameter sent in is 1 less than the arr length to avoid
+		//out of bound exceptions
+		public static double[] quickSort(double a[], int begin, int end) {
+		
 		if (begin < end) {
 			int partitionIndex = partition(a, begin, end);
 
@@ -74,15 +82,18 @@ class SortComparison {
 		return a;
 	}// end quicksort
 
-	private static int partition(double a[], int begin, int end) {
+		public static int partition(double a[], int begin, int end) {
 		double pivot = a[end];
 		int i = (begin - 1);
 
 		for (int j = begin; j < end; j++) {
 			if (a[j] <= pivot) {
 				i++;
-
+				
+				
+				
 				double swapTemp = a[i];
+
 				a[i] = a[j];
 				a[j] = swapTemp;
 			}
@@ -94,7 +105,6 @@ class SortComparison {
 
 		return i + 1;
 	}
-
 	/**
 	 * Sorts an array of doubles using Merge Sort. This method is static, thus
 	 * it can be called as SortComparison.sort(a)
@@ -113,12 +123,69 @@ class SortComparison {
 	 * @return after the method returns, the array must be in ascending sorted
 	 *         order.
 	 */
+	
+	public static double[] mergeSortIterative(double a[]) 
+	{
+		if(a == null)
+		{
+			return null;
+		}
+		
 
-	static double[] mergeSortIterative(double a[]) {
-
-		// todo: implement the sort
+		for(int length=1; length <= a.length; length=length+length)
+		{
+			for(int left = 0; left < a.length - length; left += 2*length)
+			{
+				int median = length + left - 1;
+				int right = Math.min(length*2 + left -1, a.length-1);
+				mergeIterative(a, left, median, right);
+			}
+		}
 		return a;
 	}// end mergesortIterative
+		
+	
+
+	static void mergeIterative(double[] a, int left, int median, int right) {
+		int s1 = median - left + 1;
+		int s2 = right - median;
+
+		double[] a1 = new double[s1];
+		double[] a2 = new double[s2];
+		
+		for (int count1 = 0; count1 < s1; count1++) {
+			a1[count1] = a[left + count1];
+		}
+		for (int count2 = 0; count2 < s2; count2++) {
+			a2[count2] = a[median + count2 + 1];
+		}
+
+		int i = 0;
+		int i2 = 0;
+		int k = left;
+		
+		while (i < s1 && i2 < s2) {
+			if (a1[i] <= a2[i2]) {
+				a[k] = a1[i];
+				i++;
+			} else {
+				a[k] = a2[i2];
+				i2++;
+			}
+			k++;
+		}
+
+		while (i < s1) {
+			a[k] = a1[i];
+			i++;
+			k++;
+		}
+		while (i2 < s2) {
+			a[k] = a2[i2];
+			i2++;
+			k++;
+		}
+	}
 
 	/**
 	 * Sorts an array of doubles using recursive implementation of Merge Sort.
@@ -129,9 +196,10 @@ class SortComparison {
 	 * @return after the method returns, the array must be in ascending sorted
 	 *         order.
 	 */
-	static double[] mergeSortRecursive(double a[]) {
+	
+	public static double[] mergeSortRecursive(double a[]) {
 
-		if (a.length == 1)
+		if (a.length == 1 )
 			return a;
 
 		double x = a.length / 2;
@@ -193,20 +261,19 @@ class SortComparison {
 	 * @return array sorted in ascending order
 	 *
 	 */
-	static double[] selectionSort(double a[]) {
+	public static double[] selectionSort(double a[]) {
 
-		 for (int i = 0; i < a.length - 1; i++)
-	        {
-	            int index = i;
-	            for (int j = i + 1; j < a.length; j++)
-	                if (a[j] < a[index]) 
-	                    index = j;
-	      
-	            double smallerNumber = a[index];  
-	            a[index] = a[i];
-	            a[i] = smallerNumber;
-	        }
-	        return a;
+		for (int i = 0; i < a.length - 1; i++) {
+			int index = i;
+			for (int j = i + 1; j < a.length; j++)
+				if (a[j] < a[index])
+					index = j;
+
+			double smallerNumber = a[index];
+			a[index] = a[i];
+			a[i] = smallerNumber;
+		}
+		return a;
 	}// end selectionsort
 
 }// end class
